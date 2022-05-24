@@ -9,7 +9,7 @@ namespace PublishingHouse_DataAccess.Repositories
 {
     public interface IRepository<T> where T : IEntity, new()
     {
-        Task<IList<T>> GetAll();
+        Task<IList<T>>  GetAll();
         Task<T> GetById(int id);
         Task Add(T entity);
         Task Update(T entity);
