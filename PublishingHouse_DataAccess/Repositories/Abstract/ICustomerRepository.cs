@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PublishingHouse_DataAccess.Repositories.Abstract
 {
-    internal interface ICustomerRepository:IRepository<Customer>
+    public interface ICustomerRepository : IRepository<Customer>
     {
     }
 }

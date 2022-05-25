@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PublishingHouse_DataAccess.Repositories.Abstract
 {
-    internal interface ICategoryRepository: IRepository<Category>
+    public interface ICategoryRepository: IRepository<Category>
     {
     }
 }

@@ -20,9 +20,12 @@ namespace PublishingHouse_DataAccess.Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+       
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnModelCreating(builder);
+            //connection string'in burada olması açık bir risktir.Hem güvensiz hem de maaliyetlidir...
+            //optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Northwind;Integrated Security=True");
         }
     }
 }

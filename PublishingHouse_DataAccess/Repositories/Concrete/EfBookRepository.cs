@@ -1,4 +1,6 @@
-﻿using PublishingHouse_DataAccess.Repositories.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using PublishingHouse_DataAccess.Data;
+using PublishingHouse_DataAccess.Repositories.Abstract;
 using PublishingHouse_Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,34 +12,50 @@ namespace PublishingHouse_DataAccess.Repositories.Concrete
 {
     public class EfBookRepository : IBookRepository
     {
-        public Task Add(Book entity)
+        private PublishingHouseDbContext _context;
+
+        public EfBookRepository(PublishingHouseDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task Delete(int id)
+        public async Task Add(Book entity)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(entity); //Belleğe ekleme yapıyor sadece..Persister api paterni,yani işleri biriktirip topluca veritabanında çalıştırmak
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IList<Book>> GetAll()
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var product = await _context.Books.FirstOrDefaultAsync(p => p.Id == id);
+            _context.Books.Remove(product);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Book> GetById(int id)
+        public async Task<IList<Book>> GetAll()
         {
-            throw new NotImplementedException();
+            var books = await _context.Books.ToListAsync();
+            return books;
         }
 
-        public Task<bool> IsExists(int id)
+        public async Task<Book> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Books.FindAsync(id);
+
+
         }
 
-        public Task Update(Book entity)
+
+        public async Task<bool> IsExists(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Books.AnyAsync(p => p.Id == id); //var mı yok mu onu kontrol ediyor
         }
+
+        public async Task Update(Book entity)
+        {
+            _context.Books.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
