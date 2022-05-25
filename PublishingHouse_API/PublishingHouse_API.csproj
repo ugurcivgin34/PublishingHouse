@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PublishingHouse_Business\PublishingHouse_Business.csproj" />
     <ProjectReference Include="..\PublishingHouse_DataAccess\PublishingHouse_DataAccess.csproj" />
   </ItemGroup>
 

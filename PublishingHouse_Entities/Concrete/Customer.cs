@@ -9,6 +9,7 @@ namespace PublishingHouse_Entities.Concrete
 {
     public class Customer: BaseUser,IEntity
     {
-        public virtual ICollection<Book> Books { get; set; }
+        public virtual ICollection<Shopping> Shoppings { get; set; }
+
     }
 }

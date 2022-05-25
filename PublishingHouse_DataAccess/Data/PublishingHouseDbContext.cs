@@ -14,18 +14,20 @@ namespace PublishingHouse_DataAccess.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Shopping> Shoppings { get; set; }
 
         public PublishingHouseDbContext(DbContextOptions<PublishingHouseDbContext> options) : base(options)
         {
 
         }
 
-       
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //connection string'in burada olması açık bir risktir.Hem güvensiz hem de maaliyetlidir...
             //optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Northwind;Integrated Security=True");
         }
+      
     }
 }

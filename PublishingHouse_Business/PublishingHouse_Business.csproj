@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <ProjectReference Include="..\PublishingHouse_DataAccess\PublishingHouse_DataAccess.csproj" />
+    <ProjectReference Include="..\PublishingHouse_DataTransferObjects\PublishingHouse_DataTransferObjects.csproj" />
+    <ProjectReference Include="..\PublishingHouse_Entities\PublishingHouse_Entities.csproj" />
   </ItemGroup>
 
 </Project>

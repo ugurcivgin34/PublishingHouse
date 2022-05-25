@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PublishingHouse_DataAccess.Data;
 
@@ -11,9 +12,10 @@ using PublishingHouse_DataAccess.Data;
 namespace PublishingHouse_DataAccess.Migrations
 {
     [DbContext(typeof(PublishingHouseDbContext))]
-    partial class PublishingHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220525190608_DBinitialize")]
+    partial class DBinitialize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,12 +40,17 @@ namespace PublishingHouse_DataAccess.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("WriterId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("WriterId");
 
@@ -118,7 +125,8 @@ namespace PublishingHouse_DataAccess.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ShoppingDate")
@@ -179,6 +187,10 @@ namespace PublishingHouse_DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PublishingHouse_Entities.Concrete.Customer", null)
+                        .WithMany("Books")
+                        .HasForeignKey("CustomerId");
+
                     b.HasOne("PublishingHouse_Entities.Concrete.Writer", "Writer")
                         .WithMany("Books")
                         .HasForeignKey("WriterId")
@@ -221,6 +233,8 @@ namespace PublishingHouse_DataAccess.Migrations
 
             modelBuilder.Entity("PublishingHouse_Entities.Concrete.Customer", b =>
                 {
+                    b.Navigation("Books");
+
                     b.Navigation("Shoppings");
                 });
 
