@@ -9,5 +9,6 @@ namespace PublishingHouse_DataAccess.Repositories.Abstract
 {
     public interface IWriterRepository : IRepository<Writer>
     {
+        Writer Validate(string username,string password);
     }
 }

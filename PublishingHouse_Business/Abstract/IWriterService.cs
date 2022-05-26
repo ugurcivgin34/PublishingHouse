@@ -10,11 +10,13 @@ namespace PublishingHouse_Business.Abstract
 {
     public interface IWriterService
     {
-        Task<IList<AddWriterRequest>> GetWriters();
-        Task<AddWriterRequest> GetWriter(int id);
+        Task<IList<UpdateWriterRequest>> GetWriters();
+        Task<UpdateWriterRequest> GetWriter(int id);
         Task<int> AddWriter(AddWriterRequest request);
         Task UpdateWriter(UpdateWriterRequest request);
         Task DeleteWriter(int id);
         Task<bool> IsWriterExists(int id);
+        Writer Validate(string username, string password);
+
     }
 }

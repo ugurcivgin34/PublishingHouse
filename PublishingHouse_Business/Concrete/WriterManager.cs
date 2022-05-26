@@ -35,18 +35,18 @@ namespace PublishingHouse_Business.Concrete
             await _writerRepository.Delete(id);
         }
 
-        public async Task<AddWriterRequest> GetWriter(int id)
+        public async Task<UpdateWriterRequest> GetWriter(int id)
         {
 
             var writer = await _writerRepository.GetById(id);
-            var writerDisplayResponse = mapper.Map<AddWriterRequest>(writer);
+            var writerDisplayResponse = mapper.Map<UpdateWriterRequest>(writer);
             return writerDisplayResponse;
         }
 
-        public async Task<IList<AddWriterRequest>> GetWriters()
+        public async Task<IList<UpdateWriterRequest>> GetWriters()
         {
             var writers = await _writerRepository.GetAll();
-            var result = mapper.Map<IList<AddWriterRequest>>(writers);
+            var result = mapper.Map<IList<UpdateWriterRequest>>(writers);
             return result;
         }
 
@@ -62,6 +62,12 @@ namespace PublishingHouse_Business.Concrete
         {
             var writer = mapper.Map<Writer>(request);
             await _writerRepository.Update(writer);
+        }
+
+        public Writer Validate(string username, string password)
+        {
+            var writer = _writerRepository.Validate(username, password);
+            return writer;
         }
     }
 }

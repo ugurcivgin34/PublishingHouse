@@ -3,52 +3,53 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PublishingHouse_API.Filters;
 using PublishingHouse_Business.Abstract;
-using PublishingHouse_DataTransferObjects.Request;
-using PublishingHouse_DataTransferObjects.Request.Book;
-using PublishingHouse_Entities.Concrete;
+using PublishingHouse_DataTransferObjects.Request.Category;
 
 namespace PublishingHouse_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
-        private readonly IBookService _bookService;
+        private readonly ICategoryService _categoryService;
 
-        public BooksController(IBookService bookService)
+        public CategoriesController(ICategoryService categoryService)
         {
-            _bookService = bookService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetBooks()
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetCategoryies()
         {
-            var books = await _bookService.GetBooks();
+            var Categorys = await _categoryService.GetCategories();
 
-            return Ok(books);
+            return Ok(Categorys);
         }
 
         [HttpGet("{id}")]
         [IsExists]
-        public async Task<IActionResult> GetBookById(int id)
+
+
+        public async Task<IActionResult> GetCategoryById(int id)
         {
-            AddBookRequest book = await _bookService.GetBook(id);
-            return Ok(book);
+            AddCategoryRequest Category = await _categoryService.GetCategory(id);
+            return Ok(Category);
         }
 
 
 
         [HttpPost]
-        [Authorize(Roles="admin")]
-        public async Task<IActionResult> Add(AddBookRequest request)
+        [Authorize(Roles = "admin")]
+
+        public async Task<IActionResult> Add(AddCategoryRequest request)
         {
             if (ModelState.IsValid)
             {
-                int BookId = await _bookService.AddBook(request);
+                int CategoryId = await _categoryService.AddCategory(request);
 
                 //Url yönlendirmesi,eklendiği zaman detay olrak istemciye yeni url veriyoruz
-                return CreatedAtAction(nameof(GetBookById), routeValues: new { id = BookId }, value: null);  //nameof Nesne,metot adı kullanıyorsanız hata yapmayı engeller
+                return CreatedAtAction(nameof(GetCategoryById), routeValues: new { id = CategoryId }, value: null);  //nameof Nesne,metot adı kullanıyorsanız hata yapmayı engeller
             }
             return BadRequest(ModelState);
         }
@@ -58,13 +59,13 @@ namespace PublishingHouse_API.Controllers
         [Authorize(Roles = "admin")]
 
 
-        public async Task<IActionResult> Update(int id, UpdateBookRequest request)
+        public async Task<IActionResult> Update(int id, UpdateCategoryRequest request)
         {
-            if (await _bookService.IsBookExists(id))
+            if (await _categoryService.IsCategoryExists(id))
             {
                 if (ModelState.IsValid)
                 {
-                    await _bookService.UpdateBook(request);
+                    await _categoryService.UpdateCategory(request);
                     return Ok();
                 }
                 return BadRequest(ModelState);
@@ -84,7 +85,7 @@ namespace PublishingHouse_API.Controllers
                 throw new ArgumentException("id değeri negatif olamaz!");
 
             }
-            await _bookService.DeleteBook(id);
+            await _categoryService.DeleteCategory(id);
             return Ok();
 
 

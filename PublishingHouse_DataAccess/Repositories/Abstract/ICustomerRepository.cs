@@ -9,5 +9,7 @@ namespace PublishingHouse_DataAccess.Repositories.Abstract
 {
     public interface ICustomerRepository : IRepository<Customer>
     {
+        Customer Validate(string username, string password);
+
     }
 }

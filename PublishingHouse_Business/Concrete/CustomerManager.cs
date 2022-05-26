@@ -64,6 +64,10 @@ namespace PublishingHouse_Business.Concrete
             await _customerRepository.Update(customer);
         }
 
-        
+        public Customer Validate(string username, string password)
+        {
+            var customer =_customerRepository.Validate(username, password);
+            return customer;
+        }
     }
 }

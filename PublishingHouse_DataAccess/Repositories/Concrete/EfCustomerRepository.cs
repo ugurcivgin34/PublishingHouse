@@ -56,5 +56,11 @@ namespace PublishingHouse_DataAccess.Repositories.Concrete
             _context.Customers.Update(entity);
             await _context.SaveChangesAsync();
         }
+
+        public Customer Validate(string username, string password)
+        {
+            var customer = _context.Customers.FirstOrDefault(p => p.UserName == username && p.Password == password);
+            return customer;
+        }
     }
 }

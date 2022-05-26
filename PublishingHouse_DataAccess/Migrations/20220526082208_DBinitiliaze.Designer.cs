@@ -12,8 +12,8 @@ using PublishingHouse_DataAccess.Data;
 namespace PublishingHouse_DataAccess.Migrations
 {
     [DbContext(typeof(PublishingHouseDbContext))]
-    [Migration("20220525195203_chagecusoe")]
-    partial class chagecusoe
+    [Migration("20220526082208_DBinitiliaze")]
+    partial class DBinitiliaze
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,8 +120,7 @@ namespace PublishingHouse_DataAccess.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CustomerId")
-                        .IsRequired()
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ShoppingDate")

@@ -16,5 +16,7 @@ namespace PublishingHouse_Business.Abstract
         Task UpdateCustomer(UpdateCustomerRequest request);
         Task DeleteCustomer(int id);
         Task<bool> IsCustomerExists(int id);
+        Customer Validate(string username, string password);
+
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PublishingHouse_DataAccess.Migrations
 {
-    public partial class DBinitialize : Migration
+    public partial class DBinitiliaze : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,8 +66,7 @@ namespace PublishingHouse_DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WriterId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    BookName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: true)
+                    BookName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,11 +77,6 @@ namespace PublishingHouse_DataAccess.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Books_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Books_Writers_WriterId",
                         column: x => x.WriterId,
@@ -124,11 +118,6 @@ namespace PublishingHouse_DataAccess.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_CustomerId",
-                table: "Books",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Books_WriterId",
                 table: "Books",
                 column: "WriterId");
@@ -153,10 +142,10 @@ namespace PublishingHouse_DataAccess.Migrations
                 name: "Books");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Writers");

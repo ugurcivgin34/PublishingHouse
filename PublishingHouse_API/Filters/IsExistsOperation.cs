@@ -32,6 +32,7 @@ namespace PublishingHouse_API.Filters
         /// <returns></returns>
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+           
             //metod prametrlerinden containskey id yoksa
             if (!context.ActionArguments.ContainsKey("id"))
             {
@@ -41,10 +42,27 @@ namespace PublishingHouse_API.Filters
             {
                 //Böyle bir id varsa o zaman bu id değerini al
                 var id = (int)context.ActionArguments["id"];
-                if (!await _bookService.IsBookExists(id) || !await _categoryService.IsCategoryExists(id) || !await _customerService.IsCustomerExists(id)
-                    || !await _shoppingService.IsShoppingExists(id) || !await _writerService.IsWriterExists(id))
+                var result = context.ActionDescriptor.RouteValues.Values;
+                
+                if (result.Contains("Books") && !await _bookService.IsBookExists(id))
                 {
-                    context.Result = new NotFoundObjectResult(new { message = $"{id} id'li ürün bulunamadı" }); //böyle ürün yoksa 
+                    context.Result = new NotFoundObjectResult(new { message = $"{id} id'li kitap bulunamadı" }); //böyle ürün yoksa 
+                }
+                else if (result.Contains("Categories") && !await _categoryService.IsCategoryExists(id))
+                {
+                    context.Result = new NotFoundObjectResult(new { message = $"{id} id'li kategori bulunamadı" }); //böyle ürün yoksa 
+                }
+                else if (result.Contains("Customers") && !await _customerService.IsCustomerExists(id))
+                {
+                    context.Result = new NotFoundObjectResult(new { message = $"{id} id'li müşteri bulunamadı" }); //böyle ürün yoksa 
+                }
+                else if (result.Contains("Shoppings") && !await _shoppingService.IsShoppingExists(id))
+                {
+                    context.Result = new NotFoundObjectResult(new { message = $"{id} id'li alışveriş bulunamadı" }); //böyle ürün yoksa 
+                }
+                else if (result.Contains("Writers") && !await _writerService.IsWriterExists(id))
+                {
+                    context.Result = new NotFoundObjectResult(new { message = $"{id} id'li yazar bulunamadı" }); //böyle ürün yoksa 
                 }
                 else
                 {
@@ -55,5 +73,7 @@ namespace PublishingHouse_API.Filters
 
 
         }
+
+      
     }
 }
